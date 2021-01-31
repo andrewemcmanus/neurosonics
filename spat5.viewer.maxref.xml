@@ -1,0 +1,1711 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!-- created by libisp v5.0.2 - 03/03/2020 - 16h03m24s -->
+
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+
+<c74object name="spat5.viewer" module="spat5">
+  <digest>Sources and speakers visualization and manipulation</digest>
+  <description><o>spat5.viewer</o> is a 2D graphical representation of the spatial sound scene.<br/><o>spat5.viewer</o> allows you to manipulate the sound sources or the speakers positions.<br/><br/></description>
+  <inletlist>
+  </inletlist>
+  <outletlist>
+  </outletlist>
+  <objarglist>
+  </objarglist>
+  <attributelist>
+    <attribute name="embed" type="boolean" set="1" get="1" size="1">
+      <description>The <m> embed </m> attribute allows to store the state of the object within the patcher. The complete state of the object is stored whenever the patcher is saved to disk. Upon loading the patcher or copying the object box, the state is restored.</description>
+      <digest>store state within the patcher</digest>
+    </attribute>
+    <attribute name="initwith" type="string" set="1" get="1" size="1">
+      <description>The <m> initwith </m> attribute can be used to specify the initial state of the object. You should provide a list of comma-separated OSC commands. The list of messages should be quoted (with double-quotes). This is similar to sending the list of commands via <o>loadbang</o> or <o>loadmess</o>.<br/> Have a look at the <i>spat5.tuto-osc-3.maxpat</i> example for further details.<br/> Note that the <m> initwith </m> attribute cannot be set via message, <o>attrui</o> or inspector; it must be typed directly within the object box.</description>
+      <digest>initial state of the object</digest>
+    </attribute>
+    <attribute name="parameter_enable" type="boolean" set="1" get="1" size="1">
+      <description>The <m> parameter_enable </m> attribute is used for compatibility with snapshots. It can also be used to store the initial state of the object (see 'Initial Enable' in the Max inspector).</description>
+      <digest>compatibility with snapshots</digest>
+    </attribute>
+  </attributelist>
+  <methodlist>
+    <method name="/source/number">
+      <arglist>
+        <arg type="int"/>
+      </arglist>
+      <description>set the number of sources.</description>
+      <digest>number of sources</digest>
+    </method>
+    <method name="/source/[index]/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the i-th source.</description>
+      <digest>set source visible</digest>
+    </method>
+    <method name="/source/[index]/editable">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the editability of the i-th source.</description>
+      <digest>set source editable</digest>
+    </method>
+    <method name="/source/[index]/select">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>select the i-th source.</description>
+      <digest>select source</digest>
+    </method>
+    <method name="/source/[index]/mute">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>mute the i-th source.</description>
+      <digest>mute source</digest>
+    </method>
+    <method name="/source/[index]/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color of the i-th source.</description>
+      <digest>set source color</digest>
+    </method>
+    <method name="/source/[index]/proportion">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the proportion the i-th source.</description>
+      <digest>set source proportion</digest>
+    </method>
+    <method name="/source/[index]/constraint/circular">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the circular constraints for the i-th source.</description>
+      <digest>set the circular constraints for the i-th source</digest>
+    </method>
+    <method name="/source/[index]/label">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the label for the i-th source.</description>
+      <digest>set source label</digest>
+    </method>
+    <method name="/source/[index]/label/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the label for the i-th source.</description>
+      <digest>set the visibility for the label for the i-th source</digest>
+    </method>
+    <method name="/source/[index]/label/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color for the label for the i-th source.</description>
+      <digest>set the color for the label for the i-th source</digest>
+    </method>
+    <method name="/source/[index]/label/justification">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the text justification for the label for the i-th source.</description>
+      <digest>set the text justification for the label for the i-th source</digest>
+    </method>
+    <method name="/source/[index]/vumeter/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the vumeter for the i-th source.</description>
+      <digest>set the visibility for the vumeter for the i-th source</digest>
+    </method>
+    <method name="/source/[index]/level">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the vumeter level (in dB) for the i-th source.</description>
+      <digest>set the vumeter level (in dB) for the i-th source</digest>
+    </method>
+    <method name="/source/[index]/xyz">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th source using cartesian coordinates.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/aed">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th source using navigation coordinates (azimuth/elevation/distance).</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/xy">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the xy-coordinate of the i-th source, and use default z (=0).</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/az">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the azimuth of the i-th source, using default distance (=1) and elevation (=0).</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/x">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the x-coordinate of the i-th source, and keep y and z unchanged.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/y">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the y-coordinate of the i-th source, and keep x and z unchanged.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/z">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the z-coordinate of the i-th source, and keep x and y unchanged.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/ade">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th source using navigation coordinates (azimuth/distance/elevation).</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/ae">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the azimuth/elevation of the i-th source, using default distance (=1).</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/ad">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the azimuth/distance of the i-th source, using default elevation (=0).</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/azim">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the azimuth of the i-th source. Elevation and distance remain unchanged.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/elev">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the elevation of the i-th source. Azimuth and distance remain unchanged.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/dist">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the distance of the i-th source. Azimuth and elevation remain unchanged.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/azimelev">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the azimuth and elevation of the i-th source. Distance remains unchanged.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/source/[index]/azimdist">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the azimuth and distance of the i-th source. Elevation remains unchanged.</description>
+      <digest>set source position</digest>
+    </method>
+    <method name="/sources/aed">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the list of source coordinates (aed).</description>
+      <digest>set source positions</digest>
+    </method>
+    <method name="/sources/xyz">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the list of source coordinates (xyz).</description>
+      <digest>set source positions</digest>
+    </method>
+    <method name="/sources/xy">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the list of source coordinates (xy).</description>
+      <digest>set source positions</digest>
+    </method>
+    <method name="/sources/ae">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the list of source coordinates (ae).</description>
+      <digest>set source positions</digest>
+    </method>
+    <method name="/source/[index]/aperture">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the aperture of the i-th source.</description>
+      <digest>set source aperture</digest>
+    </method>
+    <method name="/source/[index]/aperture/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the aperture of the i-th source.</description>
+      <digest>set the visibility for the aperture of the i-th source</digest>
+    </method>
+    <method name="/source/[index]/aperture/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color for the aperture of the i-th source.</description>
+      <digest>set the color for the aperture of the i-th source</digest>
+    </method>
+    <method name="/source/[index]/yaw/mode">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the yaw mode of the i-th source.</description>
+      <digest>set the yaw mode of the i-th source</digest>
+    </method>
+    <method name="/source/[index]/yaw">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the yaw angle (in deg) of the i-th source, using Euler zyx convention.</description>
+      <digest>set source yaw</digest>
+    </method>
+    <method name="/source/[index]/pitch">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the pitch angle (in deg) of the i-th source, using Euler zyx convention.</description>
+      <digest>set source pitch</digest>
+    </method>
+    <method name="/source/[index]/roll">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the roll angle (in deg) of the i-th source, using Euler zyx convention.</description>
+      <digest>set source roll</digest>
+    </method>
+    <method name="/source/[index]/orientation">
+      <arglist>
+        <arg type="number][number][number][number"/>
+      </arglist>
+      <description>set the orientation quaternion (xyzw) of the i-th source.</description>
+      <digest>set source orientation</digest>
+    </method>
+    <method name="/source/[index]/history/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the history of the i-th source.</description>
+      <digest>set the visibility for the history of the i-th source</digest>
+    </method>
+    <method name="/source/[index]/history/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color for the history of the i-th source.</description>
+      <digest>set the color for the history of the i-th source</digest>
+    </method>
+    <method name="/source/[index]/history/thickness">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the line thickness for the history of the i-th source.</description>
+      <digest>set the line thickness for the history of the i-th source</digest>
+    </method>
+    <method name="/source/[index]/history/size">
+      <arglist>
+        <arg type="int"/>
+      </arglist>
+      <description>set the (past) size for the history of the i-th source.</description>
+      <digest>set the (past) size for the history of the i-th source</digest>
+    </method>
+    <method name="/source/[index]/history/clear">
+      <description>clear the history of the i-th source.</description>
+      <digest>clear the history of the i-th source</digest>
+    </method>
+    <method name="/source/[index]/tofront">
+      <description>bring the i-th source to the front of its siblings.</description>
+      <digest>bring the i-th source to the front of its siblings</digest>
+    </method>
+    <method name="/source/[index]/toback">
+      <description>bring the i-th source to the back of its siblings.</description>
+      <digest>bring the i-th source to the back of its siblings</digest>
+    </method>
+    <method name="/source/[index]/tofront">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>bring the i-th source to the front or back of its siblings.</description>
+      <digest>bring the i-th source to the front or back of its siblings</digest>
+    </method>
+    <method name="/source/[index]/image">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the image file (svg, jpg, png, etc.) to use for the i-th source.</description>
+      <digest>set source image</digest>
+    </method>
+    <method name="/source/[index]/image/clear">
+      <description>use the default image for the i-th source.</description>
+      <digest>set source default image</digest>
+    </method>
+    <method name="/sources/level">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the vumeter levels (in dB) for all sources.</description>
+      <digest>set the vumeter levels (in dB) for all sources</digest>
+    </method>
+    <method name="/sources/visible">
+      <arglist>
+        <arg type="bbbb..."/>
+      </arglist>
+      <description>set the visibility for all sources.</description>
+      <digest>set the visibility for all sources</digest>
+    </method>
+    <method name="/speaker/number">
+      <arglist>
+        <arg type="int"/>
+      </arglist>
+      <description>set the number of speakers.</description>
+      <digest>number of speakers</digest>
+    </method>
+    <method name="/speaker/[index]/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the i-th speaker.</description>
+      <digest>set speaker visible</digest>
+    </method>
+    <method name="/speaker/[index]/editable">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the editability of the i-th speaker.</description>
+      <digest>set speaker editable</digest>
+    </method>
+    <method name="/speaker/[index]/select">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>select the i-th speaker.</description>
+      <digest>select speaker</digest>
+    </method>
+    <method name="/speaker/[index]/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color of the i-th speaker.</description>
+      <digest>set speaker color</digest>
+    </method>
+    <method name="/speaker/[index]/proportion">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the proportion the i-th speaker.</description>
+      <digest>set speaker proportion</digest>
+    </method>
+    <method name="/speaker/[index]/constraint/circular">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the circular constraints for the i-th speaker.</description>
+      <digest>set the circular constraints for the i-th speaker</digest>
+    </method>
+    <method name="/speaker/[index]/label">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the label for the i-th speaker.</description>
+      <digest>set speaker label</digest>
+    </method>
+    <method name="/speaker/[index]/label/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the label for the i-th speaker.</description>
+      <digest>set the visibility for the label for the i-th speaker</digest>
+    </method>
+    <method name="/speaker/[index]/label/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color for the label for the i-th speaker.</description>
+      <digest>set the color for the label for the i-th speaker</digest>
+    </method>
+    <method name="/speaker/[index]/label/justification">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the text justification for the label for the i-th speaker.</description>
+      <digest>set the text justification for the label for the i-th speaker</digest>
+    </method>
+    <method name="/speaker/[index]/vumeter/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the vumeter for the i-th speaker.</description>
+      <digest>set the visibility for the vumeter for the i-th speaker</digest>
+    </method>
+    <method name="/speaker/[index]/level">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the vumeter level (in dB) for the i-th speaker.</description>
+      <digest>set the vumeter level (in dB) for the i-th speaker</digest>
+    </method>
+    <method name="/speakers/aed">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the list of speaker coordinates (aed).</description>
+      <digest>set speaker positions</digest>
+    </method>
+    <method name="/speakers/xyz">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the list of speaker coordinates (xyz).</description>
+      <digest>set speaker positions</digest>
+    </method>
+    <method name="/speakers/xy">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the list of speaker coordinates (xy).</description>
+      <digest>set speaker positions</digest>
+    </method>
+    <method name="/speakers/ae">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the list of speaker coordinates (ae).</description>
+      <digest>set speaker positions</digest>
+    </method>
+    <method name="/speaker/[index]/aed">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th loudspeaker sing navigation coordinates (azimuth/elevation/distance).</description>
+      <digest>set speaker position</digest>
+    </method>
+    <method name="/speaker/[index]/xyz">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th loudspeaker using cartesian coordinates.</description>
+      <digest>set speaker position</digest>
+    </method>
+    <method name="/speaker/[index]/xy">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the xy-coordinate of the i-th loudspeaker, and use default z (=0).</description>
+      <digest>set speaker position</digest>
+    </method>
+    <method name="/speaker/[index]/ae">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the azimuth/elevation of the i-th loudspeaker, using default distance (=1).</description>
+      <digest>set speaker position</digest>
+    </method>
+    <method name="/speaker/[index]/az">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the azimuth of the i-th loudspeaker, using default distance (=1) and elevation (=0).</description>
+      <digest>set speaker position</digest>
+    </method>
+    <method name="/speaker/[index]/tofront">
+      <description>bring the i-th speaker to the front of its siblings.</description>
+      <digest>bring the i-th speaker to the front of its siblings</digest>
+    </method>
+    <method name="/speaker/[index]/toback">
+      <description>bring the i-th speaker to the back of its siblings.</description>
+      <digest>bring the i-th speaker to the back of its siblings</digest>
+    </method>
+    <method name="/speaker/[index]/tofront">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>bring the i-th speaker to the front or back of its siblings.</description>
+      <digest>bring the i-th speaker to the front or back of its siblings</digest>
+    </method>
+    <method name="/speaker/[index]/image">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the image file (svg, jpg, png, etc.) to use for the i-th speaker.</description>
+      <digest>set speaker image</digest>
+    </method>
+    <method name="/speaker/[index]/image/clear">
+      <description>use the default image for the i-th speaker.</description>
+      <digest>set speaker default image</digest>
+    </method>
+    <method name="/speakers/level">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the vumeter levels (in dB) for all speakers.</description>
+      <digest>set the vumeter levels (in dB) for all speakers</digest>
+    </method>
+    <method name="/speakers/visible">
+      <arglist>
+        <arg type="bbbb..."/>
+      </arglist>
+      <description>set the visibility for all speakers.</description>
+      <digest>set the visibility for all speakers</digest>
+    </method>
+    <method name="/stereo/number">
+      <arglist>
+        <arg type="int"/>
+      </arglist>
+      <description>set the number of stereo pairs.</description>
+      <digest>set the number of stereo pairs</digest>
+    </method>
+    <method name="/stereo/[index]/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the i-th stereo pair.</description>
+      <digest>set the visibility of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/editable">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the editability of the i-th stereo pair.</description>
+      <digest>set the editability of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/select">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>select the i-th stereo pair.</description>
+      <digest>select the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color of the i-th stereo pair.</description>
+      <digest>set the color of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/proportion">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the proportion the i-th stereo pair.</description>
+      <digest>set the proportion the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/constraint/circular">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the circular constraints for the i-th stereo pair.</description>
+      <digest>set the circular constraints for the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/label">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the label for the i-th stereo pair.</description>
+      <digest>set the label for the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/label/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the label for the i-th stereo pair.</description>
+      <digest>set the visibility for the label for the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/label/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color for the label for the i-th stereo pair.</description>
+      <digest>set the color for the label for the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/label/justification">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the text justification for the label for the i-th stereo pair.</description>
+      <digest>set the text justification for the label for the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/vumeter/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the vumeter for the i-th stereo pair.</description>
+      <digest>set the visibility for the vumeter for the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/level">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the vumeter level (in dB) for the i-th stereo pair.</description>
+      <digest>set the vumeter level (in dB) for the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/xyz">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/xy">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/x">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/y">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/z">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/aed">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/ade">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/ae">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/ad">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/az">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/azim">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/elev">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/dist">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/azim++">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/elev++">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/dist++">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/dist*=">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the position of the i-th stereo pair.</description>
+      <digest>set the position of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/aperture">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the aperture of the i-th stereo pair.</description>
+      <digest>set the aperture of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/aperture/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility for the aperture of the i-th stereo pair.</description>
+      <digest>set the visibility for the aperture of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/aperture/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the color for the aperture of the i-th stereo pair.</description>
+      <digest>set the color for the aperture of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/yaw/mode">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the yaw mode of the i-th stereo pair.</description>
+      <digest>set the yaw mode of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereo/[index]/yaw">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the yaw angle (in deg) of the i-th stereo pair, using Euler zyx convention.</description>
+      <digest>set the yaw angle (in deg) of the i-th stereo pair, using Euler zyx convention</digest>
+    </method>
+    <method name="/stereo/[index]/pitch">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the pitch angle (in deg) of the i-th stereo pair, using Euler zyx convention.</description>
+      <digest>set the pitch angle (in deg) of the i-th stereo pair, using Euler zyx convention</digest>
+    </method>
+    <method name="/stereo/[index]/roll">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the roll angle (in deg) of the i-th stereo pair, using Euler zyx convention.</description>
+      <digest>set the roll angle (in deg) of the i-th stereo pair, using Euler zyx convention</digest>
+    </method>
+    <method name="/stereo/[index]/orientation">
+      <arglist>
+        <arg type="number][number][number][number"/>
+      </arglist>
+      <description>set the orientation quaternion (xyzw) of the i-th stereo pair.</description>
+      <digest>set the orientation quaternion (xyzw) of the i-th stereo pair</digest>
+    </method>
+    <method name="/stereos/level">
+      <arglist>
+        <arg type="nnnn..."/>
+      </arglist>
+      <description>set the vumeter levels (in dB) for all stereo pairs.</description>
+      <digest>set the vumeter levels (in dB) for all stereo pairs</digest>
+    </method>
+    <method name="/post/version">
+      <description>print the version in the Max Console.</description>
+      <digest>post version</digest>
+    </method>
+    <method name="/post/doc">
+      <description>print the help documentation in the Max Console.</description>
+      <digest>post documentation</digest>
+    </method>
+    <method name="/post/state">
+      <description>print the OSC status in the Max Console.</description>
+      <digest>post current state</digest>
+    </method>
+    <method name="/preset/load">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>load a preset from file. Supported file extensions : '.txt' for human-readable OSC text file, '.osc' for binary encoded OSC file, '.coll' for human-readable Max coll file (compatible with the <o>coll</o> object). '.txt' is the default file format. You can specify the fullpath of the file, or only its filename if the file is inside Max search path.</description>
+      <digest>load preset</digest>
+    </method>
+    <method name="/preset/load">
+      <description>open a user dialog to load a preset file. Supported file extensions : '.txt' for human-readable OSC text file, '.osc' for binary encoded OSC file, '.coll' for human-readable Max coll file (compatible with the <o>coll</o> object). '.txt' is the default file format.</description>
+      <digest>load preset</digest>
+    </method>
+    <method name="/preset/export">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>export a preset to file. Supported file extensions : '.txt' for human-readable OSC text file, '.osc' for binary encoded OSC file, '.coll' for human-readable Max coll file (compatible with the <o>coll</o> object). '.txt' is the default file format. If the file extension is not provided, '.txt' will be used by default.  If the destination folder is not provided, the file will be saved in your home folder (/Users/yourlogin).</description>
+      <digest>export preset</digest>
+    </method>
+    <method name="/preset/export">
+      <description>open a user dialog to export a preset to file. Supported file extensions : '.txt' for human-readable OSC text file, '.osc' for binary encoded OSC file, '.coll' for human-readable Max coll file (compatible with the <o>coll</o> object). '.txt' is the default file format.</description>
+      <digest>export preset</digest>
+    </method>
+    <method name="/status">
+      <description>open the status window and bring it to front.</description>
+      <digest>open status window</digest>
+    </method>
+    <method name="/status/open">
+      <description>open the status window and bring it to front.</description>
+      <digest>open status window</digest>
+    </method>
+    <method name="/status/close">
+      <description>close the status window.</description>
+      <digest>close status window</digest>
+    </method>
+    <method name="/status/openorclose">
+      <description>open the status window if it was closed; close it if it was opened.</description>
+      <digest>open status window</digest>
+    </method>
+    <method name="/status/font/size">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the font size of the status window.</description>
+      <digest>font size for status window</digest>
+    </method>
+    <method name="/status/floating">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>make the status window 'floating' (i.e. always on top of other windows).</description>
+      <digest>statuswindow floating</digest>
+    </method>
+    <method name="/help">
+      <description>open the help window and bring it to front.</description>
+      <digest>open help window</digest>
+    </method>
+    <method name="/help/open">
+      <description>open the help window and bring it to front.</description>
+      <digest>open help window</digest>
+    </method>
+    <method name="/help/close">
+      <description>close the help window.</description>
+      <digest>close help window</digest>
+    </method>
+    <method name="/help/openorclose">
+      <description>open the help window if it was closed; close it if it was opened.</description>
+      <digest>open help window</digest>
+    </method>
+    <method name="/help/font/size">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the font size of the help window.</description>
+      <digest>font size for help window</digest>
+    </method>
+    <method name="/help/floating">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>make the help window 'floating' (i.e. always on top of other windows).</description>
+      <digest>helpwindow floating</digest>
+    </method>
+    <method name="/snapshot">
+      <description>open the snapshot window and bring it to front.</description>
+      <digest>open snapshot window</digest>
+    </method>
+    <method name="/snapshot/open">
+      <description>open the snapshot window and bring it to front.</description>
+      <digest>open snapshot window</digest>
+    </method>
+    <method name="/snapshot/close">
+      <description>close the snapshot window.</description>
+      <digest>close snapshot window</digest>
+    </method>
+    <method name="/snapshot/openorclose">
+      <description>open the snapshot window if it was closed; close it if it was opened.</description>
+      <digest>open snapshot window</digest>
+    </method>
+    <method name="/snapshot/font/size">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the font size of the snapshot window.</description>
+      <digest>font size for snapshot window</digest>
+    </method>
+    <method name="/snapshot/floating">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>make the snapshot window 'floating' (i.e. always on top of other windows).</description>
+      <digest>snapshotwindow floating</digest>
+    </method>
+    <method name="/status/copytoclipboard">
+      <description>copy the status to (the OS) clipboard.</description>
+      <digest>copy status to clipboard</digest>
+    </method>
+    <method name="/status/copytoclipboard">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>copy the status to (the OS) clipboard, and specify the end-of-line character (e.g. ',').</description>
+      <digest>copy status to clipboard</digest>
+    </method>
+    <method name="/dump">
+      <description>dump the complete state of the object over the rightmost outlet (a.k.a. dump outlet).</description>
+      <digest>dump state</digest>
+    </method>
+    <method name="/dump">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>dump a subset of the state of the object over the rightmost outlet. See spat5.tuto-dump-1.maxpat for usage examples.</description>
+      <digest>dump state</digest>
+    </method>
+    <method name="/snapshot/clear">
+      <description>delete all the snapshots currently in memory.</description>
+      <digest>clear snapshots</digest>
+    </method>
+    <method name="/snapshot/add">
+      <description>create a new snapshot with the current state.</description>
+      <digest>add a new snapshot</digest>
+    </method>
+    <method name="/snapshot/add">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>create a new snapshot with the current state, and set its name.</description>
+      <digest>add a new snapshot</digest>
+    </method>
+    <method name="/snapshot/[index]/store">
+      <description>store the current state in the i-th snapshot (in memory).</description>
+      <digest>store snapshot</digest>
+    </method>
+    <method name="/snapshot/[index]/recall">
+      <description>recall the current state from the i-th snapshot.</description>
+      <digest>recall snapshot</digest>
+    </method>
+    <method name="/snapshot/[index]/name">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the name of the i-th snapshot.</description>
+      <digest>set snapshot name</digest>
+    </method>
+    <method name="/snapshot/interpolate">
+      <arglist>
+        <arg type="int][int][number"/>
+      </arglist>
+      <description>interpolate between the i-th and j-th snapshots.</description>
+      <digest>interpolate between two snapshots</digest>
+    </method>
+    <method name="/snapshot/interpolate">
+      <arglist>
+        <arg type="string][string][number"/>
+      </arglist>
+      <description>interpolate between two snapshots, given their names.</description>
+      <digest>interpolate between two snapshots</digest>
+    </method>
+    <method name="/snapshot/[index]/delete">
+      <description>delete the i-th snapshot.</description>
+      <digest>delete snapshot</digest>
+    </method>
+    <method name="/snapshot/[index]/copytoclipboard">
+      <description>copy the i-th snapshot to (the OS) clipboard.</description>
+      <digest>copy snapshot to clipboard</digest>
+    </method>
+    <method name="/snapshot/[index]/copytoclipboard">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>copy the i-th snapshot to (the OS) clipboard, and specify the end-of-line character (e.g. ',').</description>
+      <digest>copy snapshot to clipboard</digest>
+    </method>
+    <method name="/snapshot/[index]/export">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>export the i-th snapshot to file.</description>
+      <digest>export snapshot</digest>
+    </method>
+    <method name="/snapshot/[index]/export/content">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>export the content of the i-th snapshot to file.</description>
+      <digest>export snapshot content</digest>
+    </method>
+    <method name="/snapshot/export">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>export all snapshots to file.</description>
+      <digest>export snapshots</digest>
+    </method>
+    <method name="/snapshot/import">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>import all snapshots from file.</description>
+      <digest>export snapshots</digest>
+    </method>
+    <method name="/listener/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the listener.</description>
+      <digest>set the visibility of the listener</digest>
+    </method>
+    <method name="/listener/editable">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the listener editable.</description>
+      <digest>set the listener editable</digest>
+    </method>
+    <method name="/listener/headphones/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the headphones.</description>
+      <digest>set the visibility of the headphones</digest>
+    </method>
+    <method name="/listener/orientation">
+      <arglist>
+        <arg type="quaternion"/>
+      </arglist>
+      <description>set the orientation of the listener.</description>
+      <digest>set the orientation of the listener</digest>
+    </method>
+    <method name="/listener/proportion">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the display proportion of the listener.</description>
+      <digest>set the display proportion of the listener</digest>
+    </method>
+    <method name="/listener/select">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>select/unselect the listener.</description>
+      <digest>select/unselect the listener</digest>
+    </method>
+    <method name="/listener/aed">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the listener position (azimuth/elevation/distance).</description>
+      <digest>set the listener position (azimuth/elevation/distance)</digest>
+    </method>
+    <method name="/hoa/number">
+      <arglist>
+        <arg type="int"/>
+      </arglist>
+      <description>set the number of HOA fields.</description>
+      <digest>set the number of HOA fields</digest>
+    </method>
+    <method name="/hoa/[index]/yaw">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the yaw angle of the i-th HOA field.</description>
+      <digest>set the yaw angle of the i-th HOA field</digest>
+    </method>
+    <method name="/background/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the window background color.</description>
+      <digest>set the window background color</digest>
+    </method>
+    <method name="/backgroundimage/file">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the background image (png, jpg, etc.).</description>
+      <digest>set the background image (png, jpg, etc.)</digest>
+    </method>
+    <method name="/backgroundimage/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the background image.</description>
+      <digest>set the visibility of the background image</digest>
+    </method>
+    <method name="/backgroundimage/opacity">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the opacity of the background image.</description>
+      <digest>set the opacity of the background image</digest>
+    </method>
+    <method name="/backgroundimage/scale">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the scale factor of the background image.</description>
+      <digest>set the scale factor of the background image</digest>
+    </method>
+    <method name="/backgroundimage/angle">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the rotation angle of the background image.</description>
+      <digest>set the rotation angle of the background image</digest>
+    </method>
+    <method name="/backgroundimage/offset/x">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the x translation offset of the background image.</description>
+      <digest>set the x translation offset of the background image</digest>
+    </method>
+    <method name="/backgroundimage/offset/y">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the y translation offset of the background image.</description>
+      <digest>set the y translation offset of the background image</digest>
+    </method>
+    <method name="/backgroundimage/offset/xy">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the x/y translation offset of the background image.</description>
+      <digest>set the x/y translation offset of the background image</digest>
+    </method>
+    <method name="/backgroundimage/quality">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the resampling quality of the background image (low, medium, high).</description>
+      <digest>set the resampling quality of the background image (low, medium, high)</digest>
+    </method>
+    <method name="/display/zoom">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the display zoom factor (%).</description>
+      <digest>set the display zoom factor (%)</digest>
+    </method>
+    <method name="/display/offset/x">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the display x translation offset (in pixels).</description>
+      <digest>set the display x translation offset (in pixels)</digest>
+    </method>
+    <method name="/display/offset/y">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the display y translation offset (in pixels).</description>
+      <digest>set the display y translation offset (in pixels)</digest>
+    </method>
+    <method name="/display/offset/z">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the display z translation offset (in pixels).</description>
+      <digest>set the display z translation offset (in pixels)</digest>
+    </method>
+    <method name="/display/offset/xy">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the display x/y translation offsets (in pixels).</description>
+      <digest>set the display x/y translation offsets (in pixels)</digest>
+    </method>
+    <method name="/display/offset/xyz">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set the display x/y/z translation offsets (in pixels).</description>
+      <digest>set the display x/y/z translation offsets (in pixels)</digest>
+    </method>
+    <method name="/display/zoom/lock">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>enable/disable zooming with the mouse wheel.</description>
+      <digest>enable/disable zooming with the mouse wheel</digest>
+    </method>
+    <method name="/axis/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the axis.</description>
+      <digest>set the visibility of the axis</digest>
+    </method>
+    <method name="/axis/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the axis color.</description>
+      <digest>set the axis color</digest>
+    </method>
+    <method name="/axis/label/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the axis label.</description>
+      <digest>set the visibility of the axis label</digest>
+    </method>
+    <method name="/axis/origin/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the axis origin.</description>
+      <digest>set the visibility of the axis origin</digest>
+    </method>
+    <method name="/axis/thickness">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set line thickness.</description>
+      <digest>set line thickness</digest>
+    </method>
+    <method name="/grid/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the grid.</description>
+      <digest>set the visibility of the grid</digest>
+    </method>
+    <method name="/grid/mode">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the grid mode.<br/>Possible values: none, circular, cartesian.</description>
+      <digest>set the grid mode. Possible values: none, circular, cartesian</digest>
+    </method>
+    <method name="/grid/spacing">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the spacing between grid lines (in meters).</description>
+      <digest>set the spacing between grid lines (in meters)</digest>
+    </method>
+    <method name="/grid/line/number">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the number of grid lines.</description>
+      <digest>set the number of grid lines</digest>
+    </method>
+    <method name="/grid/angulardivisions/number">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the number of angular divisions.</description>
+      <digest>set the number of angular divisions</digest>
+    </method>
+    <method name="/grid/angulardivisions/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of angular divisions.</description>
+      <digest>set the visibility of angular divisions</digest>
+    </method>
+    <method name="/grid/dashed">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the line style.</description>
+      <digest>set the line style</digest>
+    </method>
+    <method name="/grid/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the line color.</description>
+      <digest>set the line color</digest>
+    </method>
+    <method name="/grid/thickness">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set line thickness.</description>
+      <digest>set line thickness</digest>
+    </method>
+    <method name="/legend/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the legend.</description>
+      <digest>set the visibility of the legend</digest>
+    </method>
+    <method name="/legend/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the legend color.</description>
+      <digest>set the legend color</digest>
+    </method>
+    <method name="/legend/unit">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set distance unit.</description>
+      <digest>set distance unit</digest>
+    </method>
+    <method name="/emphasis/source">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>emphasize sources when mouse in proximity.</description>
+      <digest>emphasize sources when mouse in proximity</digest>
+    </method>
+    <method name="/emphasis/speaker">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>emphasize speakers when mouse in proximity.</description>
+      <digest>emphasize speakers when mouse in proximity</digest>
+    </method>
+    <method name="/emphasis/microphone">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>emphasize microphones when mouse in proximity.</description>
+      <digest>emphasize microphones when mouse in proximity</digest>
+    </method>
+    <method name="/ruler/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the ruler.</description>
+      <digest>set the visibility of the ruler</digest>
+    </method>
+    <method name="/ruler/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the ruler color.</description>
+      <digest>set the ruler color</digest>
+    </method>
+    <method name="/area/number">
+      <arglist>
+        <arg type="int"/>
+      </arglist>
+      <description>set the number of areas.</description>
+      <digest>set the number of areas</digest>
+    </method>
+    <method name="/area/[index]/vertex/number">
+      <arglist>
+        <arg type="int"/>
+      </arglist>
+      <description>set the number of vertex for the i-th area.</description>
+      <digest>set the number of vertex for the i-th area</digest>
+    </method>
+    <method name="/area/[index]/vertex/[index]/xy">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set position of the j-th vertex of the i-th area.</description>
+      <digest>set position of the j-th vertex of the i-th area</digest>
+    </method>
+    <method name="/area/[index]/vertex/[index]/xyz">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set position of the j-th vertex of the i-th area.</description>
+      <digest>set position of the j-th vertex of the i-th area</digest>
+    </method>
+    <method name="/area/[index]/vertex/[index]/aed">
+      <arglist>
+        <arg type="number][number][number"/>
+      </arglist>
+      <description>set position of the j-th vertex of the i-th area.</description>
+      <digest>set position of the j-th vertex of the i-th area</digest>
+    </method>
+    <method name="/area/[index]/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set visibility for the i-th area.</description>
+      <digest>set visibility for the i-th area</digest>
+    </method>
+    <method name="/area/[index]/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set color for the i-th area.</description>
+      <digest>set color for the i-th area</digest>
+    </method>
+    <method name="/area/[index]/name">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set name for the i-th area.</description>
+      <digest>set name for the i-th area</digest>
+    </method>
+    <method name="/speakerhull/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the hull color.</description>
+      <digest>set the hull color</digest>
+    </method>
+    <method name="/speakerhull/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the visibility of the hull.</description>
+      <digest>set the visibility of the hull</digest>
+    </method>
+    <method name="/speakerhull/fill/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the hull interior color.</description>
+      <digest>set the hull interior color</digest>
+    </method>
+    <method name="/speakerhull/fill">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>fill the hull.</description>
+      <digest>fill the hull</digest>
+    </method>
+    <method name="/layout">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the window layout.<br/>Possible values: single, leftright, topbottom, automatic.</description>
+      <digest>set the window layout. Possible values: single, leftright, topbottom, automatic</digest>
+    </method>
+    <method name="/window/title">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the window title (in the window titlebar).</description>
+      <digest>set the window title (in the window titlebar)</digest>
+    </method>
+    <method name="/window/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the window visibility.</description>
+      <digest>set the window visibility</digest>
+    </method>
+    <method name="/window/moveable">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the window movability.</description>
+      <digest>set the window movability</digest>
+    </method>
+    <method name="/window/resizable">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the window resizability.</description>
+      <digest>set the window resizability</digest>
+    </method>
+    <method name="/window/enable">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>enable/disable the window.</description>
+      <digest>enable/disable the window</digest>
+    </method>
+    <method name="/window/background/color">
+      <arglist>
+        <arg type="color"/>
+      </arglist>
+      <description>set the window background color.</description>
+      <digest>set the window background color</digest>
+    </method>
+    <method name="/window/opaque">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>set the window opaque flag (optimize repaint efficiency).</description>
+      <digest>set the window opaque flag (optimize repaint efficiency)</digest>
+    </method>
+    <method name="/window/fullscreen">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>enable/disable fullscreen mode.</description>
+      <digest>enable/disable fullscreen mode</digest>
+    </method>
+    <method name="/window/minimise">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>minimize the window.</description>
+      <digest>minimize the window</digest>
+    </method>
+    <method name="/window/open">
+      <description>open the window (and bring it to front).</description>
+      <digest>open the window (and bring it to front)</digest>
+    </method>
+    <method name="/window/close">
+      <description>close the window.</description>
+      <digest>close the window</digest>
+    </method>
+    <method name="/window/openorclose">
+      <description>open the window if it was closed; close it if it was opened.</description>
+      <digest>open the window if it was closed; close it if it was opened</digest>
+    </method>
+    <method name="/window/size">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the window size (width, height) (in pixels).</description>
+      <digest>set the window size (width, height) (in pixels)</digest>
+    </method>
+    <method name="/window/width">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the window width (in pixels).</description>
+      <digest>set the window width (in pixels)</digest>
+    </method>
+    <method name="/window/height">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the window height (in pixels).</description>
+      <digest>set the window height (in pixels)</digest>
+    </method>
+    <method name="/window/bounds">
+      <arglist>
+        <arg type="number][number][number][number"/>
+      </arglist>
+      <description>set the window bounds (top left position, width, height) (in pixels).</description>
+      <digest>set the window bounds (top left position, width, height) (in pixels)</digest>
+    </method>
+    <method name="/window/topleft">
+      <arglist>
+        <arg type="number][number"/>
+      </arglist>
+      <description>set the window top left position (in pixels).</description>
+      <digest>set the window top left position (in pixels)</digest>
+    </method>
+    <method name="/window/centre">
+      <description>open the window, centering it on the screen.</description>
+      <digest>open the window, centering it on the screen</digest>
+    </method>
+    <method name="/window/rendering/engine">
+      <arglist>
+        <arg type="string"/>
+      </arglist>
+      <description>set the graphical rendering engine of the window.</description>
+      <digest>set the graphical rendering engine of the window</digest>
+    </method>
+    <method name="/window/fps/visible">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>display the FPS performances of the window.</description>
+      <digest>display the FPS performances of the window</digest>
+    </method>
+    <method name="/window/scale">
+      <arglist>
+        <arg type="number"/>
+      </arglist>
+      <description>set the global scale factor of the window (in %).</description>
+      <digest>set the global scale factor of the window (in %)</digest>
+    </method>
+    <method name="/window/floating">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>make the window 'floating' (always on top).</description>
+      <digest>make the window 'floating' (always on top)</digest>
+    </method>
+    <method name="/window/hidesondeactivate">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>make the window 'hides on deactivate' (when always on top).</description>
+      <digest>make the window 'hides on deactivate' (when always on top)</digest>
+    </method>
+    <method name="/window/buttons/close">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>enable/disable the close button (in the window titlebar).</description>
+      <digest>enable/disable the close button (in the window titlebar)</digest>
+    </method>
+    <method name="/window/buttons/minimise">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>enable/disable the minimise button (in the window titlebar).</description>
+      <digest>enable/disable the minimise button (in the window titlebar)</digest>
+    </method>
+    <method name="/window/buttons/maximise">
+      <arglist>
+        <arg type="boolean"/>
+      </arglist>
+      <description>enable/disable the maximise button (in the window titlebar).</description>
+      <digest>enable/disable the maximise button (in the window titlebar)</digest>
+    </method>
+  </methodlist>
+  <seealsolist>
+    <seealso name="spat5.converter"/>
+    <seealso name="spat5.abs2rel"/>
+    <seealso name="spat5.oper"/>
+    <seealso name="spat5.converter~"/>
+    <seealso name="spat5.trajectories"/>
+    <seealso name="spat5.speaker.config"/>
+    <seealso name="spat5.speaker.layout"/>
+    <seealso name="spat5.grids"/>
+    <seealso name="spat5.viewer.control"/>
+    <seealso name="poltocar"/>
+    <seealso name="cartopol"/>
+    <seealso name="spat5.transform"/>
+    <seealso name="spat5.scale"/>
+    <seealso name="spat5.translate"/>
+    <seealso name="spat5.rotate"/>
+    <seealso name="spat5.quat.fromeuler"/>
+    <seealso name="spat5.quat.toeuler"/>
+    <seealso name="spat5.quat.transform"/>
+    <seealso name="spat5.ircamverb"/>
+    <seealso name="spat5.overview"/>
+  </seealsolist>
+</c74object>
